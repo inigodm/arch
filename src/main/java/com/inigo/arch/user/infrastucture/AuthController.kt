@@ -1,51 +1,40 @@
-package com.inigo.arch.user.infrastucture;
+package com.inigo.arch.user.infrastucture
 
-import com.inigo.arch.user.CustomUserDetailsService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor
+import lombok.Data
+import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
-    private final AuthenticationManager authManager;
-    private final BearerService jwtService;
-
-    public AuthController(AuthenticationManager authManager, BearerService jwtService) {
-        this.authManager = authManager;
-        this.jwtService = jwtService;
-    }
-
+class AuthController(private val authManager: AuthenticationManager, private val jwtService: BearerService) {
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
-        UserAuthentication authentication = (UserAuthentication) authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
+    fun login(@RequestBody request: AuthRequest): ResponseEntity<*> {
+        val authentication = authManager.authenticate(
+            UsernamePasswordAuthenticationToken(request.username, request.password)
+        ) as UserAuthentication
 
-        String token = jwtService.generateToken(authentication.getName(),
-                authentication.getEmail(),
-                authentication.getId(),
-                authentication.getUserRole());
-        return ResponseEntity.ok(new AuthResponse(token));
+        val token = jwtService.generateToken(
+            authentication.name,
+            authentication.getEmail(),
+            authentication.getId(),
+            authentication.getUserRole()
+        )
+        return ResponseEntity.ok(AuthResponse(token))
     }
 }
 
 @Data
 class AuthRequest {
-    private String username;
-    private String password;
+    val username: String? = null
+    val password: String? = null
 }
 
 @Data
 @AllArgsConstructor
-class AuthResponse {
-    private String token;
-}
+internal data class AuthResponse (val token: String? = null)

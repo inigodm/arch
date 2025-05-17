@@ -1,49 +1,42 @@
-package com.inigo.arch.user.infrastucture;
+package com.inigo.arch.user.infrastucture
 
-import com.inigo.arch.user.model.LogedInUser;
-import com.inigo.arch.user.model.TokenService;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
-import java.util.List;
+import com.inigo.arch.user.model.TokenService
+import jakarta.servlet.FilterChain
+import jakarta.servlet.ServletException
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Component
+import org.springframework.web.filter.OncePerRequestFilter
+import java.io.IOException
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final TokenService tokenService;
-
-    public JwtAuthenticationFilter(TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    @NotNull HttpServletResponse response,
-                                    @NotNull FilterChain filterChain) throws IOException, ServletException {
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+class JwtAuthenticationFilter(private val tokenService: TokenService) : OncePerRequestFilter() {
+    @Throws(IOException::class, ServletException::class)
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
+        val header = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (headerIsInvalid(header)) {
-            filterChain.doFilter(request, response);
-            return;
+            filterChain.doFilter(request, response)
+            return
         }
-        UsernamePasswordAuthenticationToken token = createToken(header);
-        SecurityContextHolder.getContext().setAuthentication(token);
-        filterChain.doFilter(request, response);
+        val token = createToken(header)
+        SecurityContextHolder.getContext().authentication = token
+        filterChain.doFilter(request, response)
     }
 
-    private boolean headerIsInvalid(String authorizationHeader) {
-        return authorizationHeader == null || !authorizationHeader.startsWith("Bearer ");
+    private fun headerIsInvalid(authorizationHeader: String?): Boolean {
+        return authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")
     }
 
-    private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) {
-        LogedInUser userPrincipal = tokenService.parseToken(authorizationHeader);
-        return new UsernamePasswordAuthenticationToken(userPrincipal, userPrincipal, List.of());
+    private fun createToken(authorizationHeader: String): UsernamePasswordAuthenticationToken {
+        val userPrincipal = tokenService.parseToken(authorizationHeader)
+        return UsernamePasswordAuthenticationToken(userPrincipal, userPrincipal, mutableListOf<GrantedAuthority?>())
     }
 }

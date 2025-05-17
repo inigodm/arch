@@ -1,9 +1,9 @@
-package com.inigo.arch.user.model;
+package com.inigo.arch.user.model
 
-import java.util.UUID;
+import java.util.*
 
-public interface TokenService {
-    String generateToken(String username, String email, UUID id, int userRole);
+interface TokenService {
+    fun generateToken(username: String, email: String, id: UUID, userRole: Int): String
 
-    LogedInUser parseToken(String token);
+    fun parseToken(token: String): LoggedInUser
 }
