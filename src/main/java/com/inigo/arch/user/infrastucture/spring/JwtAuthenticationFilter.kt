@@ -1,4 +1,4 @@
-package com.inigo.arch.user.infrastucture
+package com.inigo.arch.user.infrastucture.spring
 
 import com.inigo.arch.user.model.TokenService
 import jakarta.servlet.FilterChain

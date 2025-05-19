@@ -1,6 +1,6 @@
-package com.inigo.arch.user.infrastucture
+package com.inigo.arch.user.infrastucture.spring
 
-import com.inigo.arch.user.model.LoggedInUser
+import com.inigo.arch.user.infrastucture.spring.LoggedInUser
 import com.inigo.arch.user.model.TokenService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -51,3 +51,6 @@ class BearerService : TokenService {
         return LoggedInUser(username, email, userId, userRole)
     }
 }
+
+@JvmRecord
+data class LoggedInUser(val name: String, val email: String, val id: UUID, val userRole: Int)

@@ -1,4 +1,4 @@
-package com.inigo.arch.user.infrastucture
+package com.inigo.arch.user.infrastucture.spring.authentication
 
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.core.Authentication
@@ -8,7 +8,9 @@ import java.util.UUID
 
 @Service
 class AuthenticationManagerImpl: AuthenticationManager {
-    override fun authenticate(authentication: Authentication?): Authentication? {
+    override fun authenticate(authentication: Authentication): Authentication {
+        //TODO: Implement authentication logic here
+        // customize thi class using the preferred authentication method or launching an NotAllowedException
         return UserAuthentication()
     }
 }
