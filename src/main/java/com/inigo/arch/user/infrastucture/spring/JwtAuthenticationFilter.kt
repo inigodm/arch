@@ -1,6 +1,6 @@
 package com.inigo.arch.user.infrastucture.spring
 
-import com.inigo.arch.user.model.TokenService
+import com.inigo.arch.user.domain.TokenService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest

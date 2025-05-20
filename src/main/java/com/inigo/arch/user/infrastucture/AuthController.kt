@@ -1,8 +1,8 @@
 package com.inigo.arch.user.infrastucture
 
 import com.inigo.arch.user.application.Login
-import com.inigo.arch.user.model.Password
-import com.inigo.arch.user.model.Username
+import com.inigo.arch.user.domain.Password
+import com.inigo.arch.user.domain.Username
 import lombok.AllArgsConstructor
 import lombok.Data
 import org.springframework.http.ResponseEntity
@@ -28,4 +28,4 @@ class AuthRequest {
 }
 @Data
 @AllArgsConstructor
-internal data class AuthResponse (val token: String)
+data class AuthResponse (val token: String)

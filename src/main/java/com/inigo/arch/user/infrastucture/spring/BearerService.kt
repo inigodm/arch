@@ -1,7 +1,6 @@
 package com.inigo.arch.user.infrastucture.spring
 
-import com.inigo.arch.user.infrastucture.spring.LoggedInUser
-import com.inigo.arch.user.model.TokenService
+import com.inigo.arch.user.domain.TokenService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys

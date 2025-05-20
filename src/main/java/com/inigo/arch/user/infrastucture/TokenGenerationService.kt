@@ -1,11 +1,11 @@
 package com.inigo.arch.user.infrastucture
 
 import com.inigo.arch.user.infrastucture.spring.BearerService
-import com.inigo.arch.user.infrastucture.spring.authentication.UserAuthentication
-import com.inigo.arch.user.model.Password
-import com.inigo.arch.user.model.Token
-import com.inigo.arch.user.model.TokenGenerator
-import com.inigo.arch.user.model.Username
+import com.inigo.arch.user.infrastucture.spring.UserAuthentication
+import com.inigo.arch.user.domain.Password
+import com.inigo.arch.user.domain.Token
+import com.inigo.arch.user.domain.TokenGenerator
+import com.inigo.arch.user.domain.Username
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
