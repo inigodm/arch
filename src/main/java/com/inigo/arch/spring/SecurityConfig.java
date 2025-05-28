@@ -1,4 +1,4 @@
-package com.inigo.arch.user.infrastucture.spring;
+package com.inigo.arch.spring;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
