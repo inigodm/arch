@@ -36,4 +36,5 @@ execute /scripts/run-local.sh
 To create aggregate root extend:
 
 import org.springframework.data.domain.AbstractAggregateRoot;
+To use it use import org.springframework.context.event.EventListener to mark the method that will receive an spcific type
 
