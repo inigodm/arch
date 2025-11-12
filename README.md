@@ -20,3 +20,20 @@ And after start the application locally with:
 ```./gradlew bootRun --args='--spring.profiles.active=local' ```
 
 The app's login does NOTHING with the user and the password, they should be checked against somethig but is not implemented yet (and I am not sure that I should do it here)
+
+-----------------------------------------------------------
+
+install gradle:
+
+sdk install gradle
+
+build greadlew
+
+gradle wrapper
+
+execute /scripts/run-local.sh
+
+To create aggregate root extend:
+
+import org.springframework.data.domain.AbstractAggregateRoot;
+
