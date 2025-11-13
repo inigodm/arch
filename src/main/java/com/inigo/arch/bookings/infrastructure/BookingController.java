@@ -1,6 +1,5 @@
 package com.inigo.arch.bookings.infrastructure;
 
-import com.inigo.arch.bookings.infrastructure.jpa.BookingJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
