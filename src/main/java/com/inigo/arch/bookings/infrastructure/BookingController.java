@@ -1,6 +1,7 @@
 package com.inigo.arch.bookings.infrastructure;
 
 import com.inigo.arch.bookings.infrastructure.jpa.BookingJpa;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,15 @@ public class BookingController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody BookingJpa booking) {
+    public ResponseEntity<Void> update(@RequestBody BookingUpdateCommand booking) {
         return ResponseEntity.ok().build();
     }
+}
+
+@AllArgsConstructor
+class BookingUpdateCommand {
+    public UUID id;
+    public UUID userId;
+    public UUID tripId;
+    public int numberOfPassengers;
 }
