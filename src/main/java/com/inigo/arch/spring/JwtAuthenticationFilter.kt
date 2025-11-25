@@ -14,7 +14,10 @@ import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
 
 @Component
-class JwtAuthenticationFilter(private val tokenService: TokenService) : OncePerRequestFilter() {
+class JwtAuthenticationFilter(
+    val tokenService: TokenService
+) : OncePerRequestFilter() {
+
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
