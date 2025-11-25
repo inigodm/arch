@@ -1,9 +1,9 @@
 spring.application.name: arch
 spring:
     datasource:
-        url: ${SPRING_DATASOURCE_URL}
-        username: ${SPRING_DATASOURCE_USERNAME}
-        password: ${SPRING_DATASOURCE_PASSWORD}
+        url: jdbc:postgresql://localhost:5432/base
+        username: user
+        password: pass
     flyway:
         locations: classpath:db/migration
         enabled: true
@@ -11,3 +11,6 @@ spring:
         allow-bean-definition-overriding: true
 server:
     port: 8080
+jwt:
+  secret: mysecretkeymysecretkeymysecretkeymysecretkeymysecretkeymysecretkeymysecretkeymysecretkeymysecretkeymysecretkey
+  expiration: 3600

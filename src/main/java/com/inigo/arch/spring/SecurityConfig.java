@@ -19,6 +19,8 @@ import java.util.List;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+    String domain = "localhost";
+
     private final JwtAuthenticationFilter authenticationFilter;
 
     public SecurityConfig(JwtAuthenticationFilter authenticationFilter) {
@@ -39,14 +41,23 @@ public class SecurityConfig {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage())
                 ));
         // Set permissions on endpoints
-        http.authorizeHttpRequests(auth -> {
+        http.authorizeHttpRequests(auth ->
             auth
-                .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/user/create").permitAll()
-                .requestMatchers( "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-ui*", "/v3/*").permitAll()
-                .requestMatchers("/**").authenticated();
-                // The rest of them will be private
-        });
+                .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/api/user").permitAll()
+                .requestMatchers("/webauthn/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/h2-console").permitAll()
+                .requestMatchers( "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui*",
+                        "/v3/**",
+                        "/v3/api-docs/**",
+                        "/v3/api-docs*").permitAll()
+                    // The rest of them will be private
+                .requestMatchers("/**").authenticated()
+        );
         // Add JWT token filter
         http.addFilterAfter(
             authenticationFilter,
@@ -60,11 +71,13 @@ public class SecurityConfig {
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("https://" + domain);
+        config.addAllowedOrigin("http://localhost:4200");
         config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE","OPTIONS","PATCH"));
         config.setExposedHeaders(List.of("Authorization"));
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 }

@@ -1,5 +1,6 @@
 package com.inigo.arch.user.infrastucture.spring
 
+import com.inigo.arch.spring.BearerService
 import com.inigo.arch.spring.UserAuthentication
 import com.inigo.arch.user.domain.Password
 import com.inigo.arch.user.domain.Token

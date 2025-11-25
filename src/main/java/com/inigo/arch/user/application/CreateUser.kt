@@ -25,6 +25,16 @@ class CreateUser(val store: UserStore) {
             password = password,
             role = role
         )
+        if (store.existsUserId(user.id)) {
+            LOG.warn("User with id ${id} already exists")
+            return
+        }
+        require (!store.existsEmail(user)) {"User with email $email already exists" }
+        require (!store.existsUsername(user)) { "User with username $username already exists" }
         store.save(user)
+    }
+
+    companion object {
+        private val LOG = org.slf4j.LoggerFactory.getLogger(CreateUser::class.java)
     }
 }
